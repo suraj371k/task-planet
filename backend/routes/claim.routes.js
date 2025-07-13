@@ -7,6 +7,6 @@ router.post('/' , claimPoints)
 
 router.get('/' , getAllClaims)
 
-router.get('/user:userId' , getClaimsByUser)
+router.get('/user/:userId' , getClaimsByUser)
 
 export default router;
