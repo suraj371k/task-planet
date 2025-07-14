@@ -12,6 +12,11 @@ export const createUser = async (req, res) => {
         }
         const user = new User({ name });
         await user.save();
+
+        //emit event
+        const io = req.app.get('io')
+        io.emit("userCreated" , user); //brodcast to all client
+        
         return res.status(201).json(user);
     } catch (error) {
         console.log("Error in create user controller", error.message);
@@ -39,22 +44,4 @@ export const getAllUsers = async (req, res) => {
 };
 
 
-// (Optional) Get a single user by ID
-export const getUserById = async (req, res) => {
-    try {
-        const { id } = req.params;
-        if (!id) {
-            return res.status(400).json({ message: "User ID is required" });
-        }
 
-        const user = await User.findById(id);
-        if (!user) {
-            return res.status(404).json({ message: "User not found" });
-        }
-
-        return res.status(200).json(user);
-    } catch (error) {
-        console.log("Error in getUserById controller", error.message);
-        return res.status(500).json({ message: "Internal Server error" });
-    }
-};
