@@ -2,6 +2,8 @@ import { create } from "zustand";
 import axios from "axios";
 import { socket } from "../services/socket";
 
+const backend_url = import.meta.env.VITE_BACKEND_URL;
+
 // userStore.jsx
 export const useUserStore = create((set, get) => ({
   users: [],
@@ -11,7 +13,7 @@ export const useUserStore = create((set, get) => ({
   getUsers: async () => {
     try {
       set({ loading: true, error: null });
-      const response = await axios.get(`/api/users`);
+      const response = await axios.get(`${backend_url}/api/users`);
       set({ users: response.data, loading: false });
     } catch (error) {
       set({ error: error.message, loading: false });
@@ -21,7 +23,7 @@ export const useUserStore = create((set, get) => ({
   createUser: async (data) => {
     try {
       set({ loading: true, error: null });
-      await axios.post(`/api/users`, data);
+      await axios.post(`${backend_url}/api/users`, data);
       // Refetch the full user list after adding
       const response = await axios.get(`/api/users`);
       set({ users: response.data, loading: false });

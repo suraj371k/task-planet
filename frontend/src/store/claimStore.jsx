@@ -2,6 +2,9 @@ import { create } from "zustand";
 import axios from "axios";
 import { socket } from "../services/socket";
 
+const backend_url = import.meta.env.VITE_BACKEND_URL;
+
+
 export const useClaimStore = create((set, get) => ({
   selectedUser: null,
   claimResult: null,
@@ -24,7 +27,7 @@ export const useClaimStore = create((set, get) => ({
     set({ loading: true, error: null });
 
     try {
-      const res = await axios.post(`/api/claim`, { id: user._id });
+      const res = await axios.post(`${backend_url}/api/claim`, { id: user._id });
       set({ claimResult: res.data, loading: false });
     } catch (error) {
       set({
@@ -38,7 +41,7 @@ export const useClaimStore = create((set, get) => ({
   fetchAllClaims: async () => {
     set({ loading: true, error: null });
     try {
-      const res = await axios.get(`/api/claim`);
+      const res = await axios.get(`${backend_url}/api/claim`);
       set({ allClaims: res.data, loading: false });
     } catch (error) {
       set({
@@ -52,7 +55,7 @@ export const useClaimStore = create((set, get) => ({
   fetchClaimsByUser: async (userId) => {
     set({ loading: true, error: null });
     try {
-      const res = await axios.get(`/api/claim/user/${userId}`);
+      const res = await axios.get(`${backend_url}/api/claim/user/${userId}`);
       set({ userClaims: res.data, loading: false });
     } catch (error) {
       set({
