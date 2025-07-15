@@ -2,7 +2,7 @@ import { create } from "zustand";
 import axios from "axios";
 import { socket } from "../services/socket";
 
-const backend_url = import.meta.env.VITE_BACKEND_URL;
+const backend_url='https://task-planet.onrender.com'
 
 
 export const useClaimStore = create((set, get) => ({

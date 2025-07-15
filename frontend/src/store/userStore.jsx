@@ -2,7 +2,7 @@ import { create } from "zustand";
 import axios from "axios";
 import { socket } from "../services/socket";
 
-const backend_url = import.meta.env.VITE_BACKEND_URL;
+const backend_url='https://task-planet.onrender.com'
 
 // userStore.jsx
 export const useUserStore = create((set, get) => ({
@@ -25,7 +25,7 @@ export const useUserStore = create((set, get) => ({
       set({ loading: true, error: null });
       await axios.post(`${backend_url}/api/users`, data);
       // Refetch the full user list after adding
-      const response = await axios.get(`/api/users`);
+      const response = await axios.get(`${backend_url}/api/users`);
       set({ users: response.data, loading: false });
     } catch (error) {
       set({ error: error.message, loading: false });
