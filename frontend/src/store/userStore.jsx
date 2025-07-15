@@ -34,12 +34,11 @@ export const useUserStore = create((set, get) => ({
     //prevent multiple socket listeners
     if (get().socketInitialized) return;
 
-        // ✅ Real-time leaderboard update
         socket.on('pointsClaimed', ({ user }) => {
           set((state) => ({
             users: state.users.map((u) =>
               u._id === user._id
-                ? { ...u, totalPoints: user.totalPoints } // ✅ update totalPoints
+                ? { ...u, totalPoints: user.totalPoints } 
                 : u
             ),
           }));
